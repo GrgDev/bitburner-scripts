@@ -129,10 +129,10 @@ export async function main(ns) {
     }
     let mergelessPass = false;
     let result = intervalArray;
-    let debugJ = 0;
+    //let debugJ = 0;
     while (!mergelessPass) {
       //ns.tprint(`DEBUG: While-loop interation number ${debugJ}`);
-      debugJ++;
+      //debugJ++;
       mergelessPass = true;
       let prepassIntervals = result;
       if (prepassIntervals.length === 1) {
@@ -208,10 +208,10 @@ export async function main(ns) {
           }
           ns.tprint(output);
         } else {
-          let output = 'Found a contract that is currently unsolveable.';
-          output += `\nServer: ${currentServer}`;
-          output += `\nType: ${contractType}\n\n`;
-          if (!unsolvedMapping.hasOwnProperty(contractType)) {
+          //let output = 'Found a contract that is currently unsolveable.';
+          //output += `\nServer: ${currentServer}`;
+          //output += `\nType: ${contractType}\n\n`;
+          if (!Object.prototype.hasOwnProperty.call(unsolvedMapping, contractType)) {
             unsolvedMapping[contractType] = 0;
           }
           unsolvedMapping[contractType]++;
@@ -240,7 +240,7 @@ export async function main(ns) {
   }
   const currentContracts = findContracts();
   for (const contract of currentContracts) {
-    //ns.tprint(JSON.stringify(contract, undefined, 2));
+    ns.tprint(JSON.stringify(contract, undefined, 2));
   }
   //ns.tprint(JSON.stringify(ns.codingcontract.getContractTypes()));
 }
