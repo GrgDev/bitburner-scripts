@@ -1,3 +1,7 @@
+Below is the original README from the viteburner-template I used to initialize this repo with a great setup. Please give Tanimodori some love because this is awesome. Therefore I am keeping their README here at the top level.
+
+If you want to see the main README and other docs for this specific project, please see my [README](./docs/README.md) in the [docs](./docs) folder. I am also not bothering to change the LICENSE file as I agree with the MIT license.
+
 # Viteburner-template
 
 This is a template for a viteburner project. It is a simple example of how to use Viteburner.
