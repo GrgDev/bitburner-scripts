@@ -22,7 +22,7 @@ It's pretty awesome, and I am still learning everything that it provides. Howeve
 
 Your Remote API screen in Bitburner should confirm an `Online` status. Your terminal window should confirm a connection was successful with a `conn connected` message plus a prompt to press `h` for help or `q` to quit. Note that the terminal does not have a cursor. There is no need to press the ENTER key after you type a command letter in. You simply press the command key while the terminal has focus and it will execute the command. I highly recommend pressing `h` to review the commands.
 
-I currently use this daemon toolset for primarily two things.
+I currently use this daemon toolset for a few things.
 
 1. Sync files between this github repo and the Bitburner game. Note that the daemon tools do **not** do automatic bidirection syncing and that is a feature. Not a bug.
    - Only the files within the [src](../src) folder will be synced.
@@ -42,3 +42,4 @@ I currently use this daemon toolset for primarily two things.
        - `.lit`
        - `.cct`
 1. As briefly mentioned above, this does the work of converting between Typescript and Javascript. I am still figuring out if I can hook in further actions CI/CD related actions as well such as automatic unit test runs before upload. Stay tuned.
+1. This setup also makes it so as I am working on game scripts, it will tell me how much in-game RAM the script is going to use. Because RAM usage in the game is calucated in a significantly different way to how code would use RAM in real life, this is very helpful.
