@@ -6,6 +6,8 @@ This repo is for hosting my version controlled javascript code for a game I like
 
 Thank you.
 
+One more quick mention. I only run Bitburner on my home Windows machine. Therefore I cannot guarantee that my git config settings on that Windows machine will properly let you clone my git repo with the proper line terminations (LF vs CRLF). Since I expect myself to be the only one using this repo, that's your problem. Not mine.
+
 ## What is with the Vitburner Template?
 
 It's pretty awesome, and I am still learning everything that it provides. However, it can't do anything cool until you connect it to the game. Here are the steps to do that.
