@@ -2,9 +2,9 @@
 
 This repo is for hosting my version controlled javascript code for a game I like to play called Bitburner. It's both [free on Steam](https://store.steampowered.com/app/1812820/Bitburner/) and [an open source game](https://github.com/bitburner-official/bitburner-src). You have no excuse to not try it. I hated javascript before playing this game, but now I am willing to tolerate it. Thanks Bitburner!
 
-**NOTE:** If you are a potential employer looking at this code as an evaluation of my programming abilities, let me just say that I will bring my silly or humerous commit messages and similar writing into the professional workplace. I would make it more tasteful in such an environment, and not let it get in the way of conveying essential information. Life is too short to not be having any laughs while you work.
-
 Thank you.
+
+Don't forget to reference the [game's API documentation.](https://github.com/bitburner-official/bitburner-src/blob/stable/markdown/bitburner.md) There's also in-game documentation but it generally only gives very high level descriptions of mechanics and a couple of code examples with no real API information. The API documentation on github is much better as a coding reference.
 
 One more quick mention. I only run Bitburner on my home Windows machine. Therefore I cannot guarantee that my git config settings on that Windows machine will properly let you clone my git repo with the proper line terminations (LF vs CRLF). Since I expect myself to be the only one using this repo, that's your problem. Not mine.
 
