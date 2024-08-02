@@ -31,3 +31,19 @@ Some quick test code suggests the usually `hack()` seems to decrease money more 
 * Hack-Grow Ratio: 0.3125
 * Weaken-Hack Ratio: 4
 * Hack-Weaken Ratio: 0.25
+
+## Remaining TODOs
+1. Update the remote script args to accept the PID of the batcher that spawned them so the batcher can script kill only the scripts that it spawned itself. It currently kills any running remote scripts from other batcher instances. This fixes itself pretty quickly but it's still a problem.
+1. Dynamically figure out how many more `grow()` calls are needed compared to `hack()` calls. I only tested with the `phantasy` server so far. There the percentage change in available money from `hack()` was about `-0.0007` but the percentage change for `grow()` was `+0.0004`. Thus a single `grow()` call can't compensate for a single `hack()` call. Based on this test, I simply set it to do 2 `grow()` calls instead of 1. I need to switch this to make it a dynamic ratio and ensure the RAM allocation check matches the logic.
+1. Once the dynamic grow/hack ratio logic is implemented, the next step is to implement how many threads to multiply that ratio by while still having them compensated in security modifiers by a single `weaken()` call.
+1. Once the optimal one `weaken()` call based HWGW batch is implemented, it would be a good time to convert this to a HGW batcher instead. `hack()` has half of the effect on the security level as `grow()` but more `grow()` calls are usually needed compared to `hack()` calls due to the greater effect on the available money that `hack()` has over `grow()`. This makes the `weaken()` call to compensate for the `hack()` step mostly a waste. It would be more optimal to combine the `hack()` and `grow()` calls to be both compensated by a single `weaken()` call so the `weaken()` modifier isn't going to waste.
+1. Split the script into multiple scripts with them calling that function that allows a script to exit while spawning a new script. This will allow the start of the setup to use more RAM expensive functions at first but the long running script will be more RAM lean.
+1. Rewrite certain sections to remove extra functions that cause unnessecary RAM waste. Don't do this until after the previous TODOs are done as we might end up needing to re-add a previously removed function.
+
+## Changelist
+
+### v1.0
+
+This is the initial first working version of the hacking batcher.
+It uses 8.9 GB of RAM, and there's definitely room to get that lower.
+Has some other issues that will be addressed in later versions.
