@@ -108,7 +108,7 @@ export async function main(ns: NS) {
     weakenTime = ns.getWeakenTime(targetServerName)
     await runOnServers(ns, "/hawaii/batch_weaken.js", targetServerName, batchCount, 0, 1)
     await runOnServers(ns, "/hawaii/batch_weaken.js", targetServerName, batchCount, stepDelay, 1)
-    await runOnServers(ns, "/hawaii/batch_grow.js", targetServerName, batchCount, (weakenTime - growTime) + (stepDelay * 2), 2)
+    await runOnServers(ns, "/hawaii/batch_grow.js", targetServerName, batchCount, (weakenTime - growTime) + (stepDelay * 2), 4)
     await runOnServers(ns, "/hawaii/batch_hack.js", targetServerName, batchCount, (weakenTime - hackTime) + (stepDelay * 3), 1)
     await ns.sleep(stepDelay * 4)
     batchCount += 1
