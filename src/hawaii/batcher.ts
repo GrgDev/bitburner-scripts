@@ -2,6 +2,7 @@ import { NS } from '@ns';
 import { ServersWithRam} from './utils';
 
 const stepDelay = 20
+const reserveHomeRam = 20
 
 async function runOnServers(
   ns: NS,
@@ -12,13 +13,19 @@ async function runOnServers(
   threads: number
 ){
   let ramUsage = ns.getScriptRam(scriptPath)
-  let allServersWithRam = ns.getPurchasedServers().concat(ServersWithRam)
+  let allServersWithRam = ns.getPurchasedServers()
+  allServersWithRam.push("home")
+  allServersWithRam.concat(ServersWithRam)
   let scriptsLeftToAllocate = threads
   while (scriptsLeftToAllocate > 0) {
     for (let serverName of allServersWithRam) {
       let server = ns.getServer(serverName)
+      if (serverName === "home" &&
+        (server.maxRam - Math.max(server.ramUsed, reserveHomeRam) < ramUsage)) {
+        continue
+      }
       if ((server.maxRam - server.ramUsed) > ramUsage) {
-        ns.exec(scriptPath, serverName, 1, targetServer, msDelay, batchId)
+        ns.exec(scriptPath, serverName, 1, targetServer, msDelay, batchId, ns.pid)
         scriptsLeftToAllocate -= 1
         break
       }
@@ -32,8 +39,8 @@ export async function main(ns: NS) {
     ns.tprint("Usage: batcher.js [server name]")
     ns.exit()
   }
+  ns.disableLog("ALL")
   let targetServerName = ns.args[0].toString()
-  let targetServer = ns.getServer(targetServerName)
   
   // First, copy the latest version of all the batch scipts
   // to all the servers with useable RAM
@@ -56,6 +63,7 @@ export async function main(ns: NS) {
   let batchCount = 0
 
   // Minimize Server Security
+  ns.print("Starting minimizing of security.")
   while(true) {
     if (
       ns.getServerSecurityLevel(targetServerName) == ns.getServerMinSecurityLevel(targetServerName)
@@ -66,13 +74,24 @@ export async function main(ns: NS) {
     await ns.sleep(stepDelay)
     batchCount += 1
   }
+  ns.grow
+
+  function killThisBatchWorkers() {
+    for (let server of allServersWithRam) {
+      for (let script of ns.ps(server)) {
+        if (script.args[3] == ns.pid) {
+          ns.kill(script.pid)
+        }
+      }
+    }
+  }
+  ns.atExit(killThisBatchWorkers)
 
   // Kill unneeded spawned prep scripts
-  for (let server of allServersWithRam) {
-    ns.killall(server)
-  }
+  killThisBatchWorkers()
 
   // Prep The Server
+  ns.print("Starting growing of funds.")
   batchCount = 0
   while(true) {
     if (
@@ -90,19 +109,18 @@ export async function main(ns: NS) {
   }
 
   // Kill unneeded spawned prep scripts
-  for (let server of allServersWithRam) {
-    ns.killall(server)
-  }
+  killThisBatchWorkers()
 
   // Deploy the HWGW!
   batchCount = 0
+  ns.print("Starting money printing hack loop.")
   while(true) {
-    if (ns.getServerMinSecurityLevel(targetServerName) < ns.getServerSecurityLevel(targetServerName)) {
-      ns.print("WARN: Started new batch run but security is not minimized. This should not happen.")
-    }
-    if (ns.getServerMoneyAvailable(targetServerName) < ns.getServerMaxMoney(targetServerName)) {
-      ns.print("WARN: Started new batch run but money is not maximized. This should not happen.")
-    }
+    // if (ns.getServerMinSecurityLevel(targetServerName) < ns.getServerSecurityLevel(targetServerName)) {
+    //   ns.print("WARN: Started new batch run but security is not minimized. This should not happen.")
+    // }
+    // if (ns.getServerMoneyAvailable(targetServerName) < ns.getServerMaxMoney(targetServerName)) {
+    //   ns.print("WARN: Started new batch run but money is not maximized. This should not happen.")
+    // }
     hackTime = ns.getHackTime(targetServerName)
     growTime = ns.getGrowTime(targetServerName)
     weakenTime = ns.getWeakenTime(targetServerName)
@@ -113,4 +131,5 @@ export async function main(ns: NS) {
     await ns.sleep(stepDelay * 4)
     batchCount += 1
   }
+
 }

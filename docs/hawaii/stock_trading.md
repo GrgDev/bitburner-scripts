@@ -68,3 +68,18 @@ too many frequent trades at not high enough of a profit will result in overall
 losses. Meaning if the profit from each closing position is not worth at least
 $200k net gain on average, we're losing money. We can't have that.
 
+For the first version, we can probably avoid making this complicated by only
+doing transactions worth more than a certain amount. Given two transactions,
+one to open and one to close a position, we need to compensate for $200k. We
+can probably accomplish this more often than not if we keep the transaction
+cost to 1% or less. Thus a net positive change above 1% on the position would
+give us a net positive. This would mean each position would need to have a net
+starting value of at least $20m. Remember this needs to be under 20% of our
+total cash. If we put all of our stock money into a single stock, then our
+total amount of cash would need to be at least $100m. However, we would
+probably like to diversify our holdings to multiple stocks. Assuming we spread
+our allocations over 5 stocks, this would mean we need $500m. If we wanted to
+go long on 5 stocks and short on 5 stocks, we would need at least $1b. In other
+words, we really shouldn't be running this algorithm until we have at least $1b
+cash saved up.
+
